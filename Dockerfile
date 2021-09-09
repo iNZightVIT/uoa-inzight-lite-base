@@ -11,6 +11,8 @@ MAINTAINER "Science IS Team" ws@sit.auckland.ac.nz
 
 ENV BUILD_DATE "2021-07-28"
 
+RUN apt-get update --allow-releaseinfo-change
+
 RUN apt-get update && apt-get install -y git
 
 # Install (via R) all of the necessary packages (R will automatially install dependencies):
