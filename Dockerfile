@@ -1,27 +1,23 @@
 # -------------------------------------------------------
 #
-# This image inherits uoa-inzight-lite-base:dev image, 
-# updates packages from docker.stat.auckland.ac.nz 
+# This image inherits uoa-inzight-lite-base:dev image,
+# updates packages from docker.stat.auckland.ac.nz
 # repository and installs the shiny app for Lite
 #
-# --------------------------------------------------------
+# ----------------------------------------
 
-FROM scienceis/uoa-inzight-lite-base:dev
+FROM scienceis/uoa-inzight-lite-base:latest
 
 MAINTAINER "Science IS Team" ws@sit.auckland.ac.nz
 
-# Edit the following environment variable, commit to Github and it will trigger Docker build
-# Since we fetch the latest changes from the associated Application~s master branch
-# this helps trigger date based build
-# The other option would be to tag git builds and refer to the latest tag
-ENV LAST_BUILD_DATE "Wed 26 02 21:45:00 NZDT 2020"
+ENV BUILD_DATE "2022-01-06"
 
-#\
-#  
-# Install (via R) all of the necessary packages (R will automatially install dependencies):
-RUN apt-get update \
-&& apt-get install -y -q \
-         xtail \
-&& apt-get clean \
-&& rm -rf /tmp/* /var/tmp/*
-#ENV LC_ALL en_US.UTF-8
+RUN apt-get update --allow-releaseinfo-change
+
+RUN apt-get update && apt-get install -y git
+
+Run R -e "install.packages('shiny', type='source')"
+RUN R -e "install.packages(c('survey', 'RcppTOML', 'srvyr', 'styler', 'readr', 'readtext'))"
+RUN R -e "install.packages('https://r.docker.stat.auckland.ac.nz/src/contrib/iNZightPlots_2.13.4.tar.gz', repos = NULL, type = 'source', dependencies = TRUE)"
+RUN R -e "install.packages('https://r.docker.stat.auckland.ac.nz/src/contrib/iNZightTools_1.11.3.tar.gz', repos = NULL, type = 'source', dependencies = TRUE)" \
+  && rm -rf /tmp/* /var/tmp/*
