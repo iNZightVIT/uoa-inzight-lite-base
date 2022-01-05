@@ -18,6 +18,6 @@ RUN apt-get update && apt-get install -y git
 
 Run R -e "install.packages('shiny', type='source')"
 RUN R -e "install.packages(c('survey', 'RcppTOML', 'srvyr', 'styler', 'readr', 'readtext'))"
-RUN R -e "install.packages('https://r.docker.stat.auckland.ac.nz/src/contrib/iNZightPlots_2.13.4.tar.gz', repos = NULL, type = 'source', dependencies = TRUE)"
-RUN R -e "install.packages('https://r.docker.stat.auckland.ac.nz/src/contrib/iNZightTools_1.11.3.tar.gz', repos = NULL, type = 'source', dependencies = TRUE)" \
+RUN R -e "install.packages('https://r.docker.stat.auckland.ac.nz/src/contrib/iNZightPlots_2.13.5.tar.gz', repos = NULL, type = 'source', dependencies = TRUE)"
+RUN R -e "install.packages('https://r.docker.stat.auckland.ac.nz/src/contrib/iNZightTools_1.12.1.tar.gz', repos = NULL, type = 'source', dependencies = TRUE)" \
   && rm -rf /tmp/* /var/tmp/*
